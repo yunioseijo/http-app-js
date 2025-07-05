@@ -1,12 +1,21 @@
+import { loadUsersByPage } from "../uses-cases/load-users-by-page";
+
 const state = {
   currentPage: 0,
   users: [],
 };
 const loadNextPage = async () => {
-  throw new Error("Not implemented");
+  const users = await loadUsersByPage(state.currentPage + 1);
+  if (users.length === 0) return;
+  state.currentPage += 1;
+  state.users = users;
 };
 const loadPreviewPage = async () => {
-  throw new Error("Not implemented");
+  if (state.currentPage === 1) return;
+  const users = await loadUsersByPage(state.currentPage - 1);
+  if (users.length === 0) return;
+  state.currentPage -= 1;
+  state.users = users;
 };
 //TODO: implment
 const onUserChanged = async () => {
@@ -20,6 +29,14 @@ export default {
   onUserChanged,
   loadPreviewPage,
   loadNextPage,
-  getUser: () => [...state.users],
+  /**
+   *
+   * @returns {User[]}
+   */
+  getUsers: () => [...state.users],
+  /**
+   *
+   * @returns {number}
+   */
   getCurrentPage: () => state.currentPage,
 };
