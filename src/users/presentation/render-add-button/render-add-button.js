@@ -1,4 +1,4 @@
-import { showModal } from "../render-model/render-model";
+import { showModal } from "../render-modal/render-modal";
 import "./render-add-button.css";
 export const renderAddButton = (element) => {
   const fabButton = document.createElement("button");

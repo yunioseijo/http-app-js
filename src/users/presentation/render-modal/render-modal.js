@@ -1,5 +1,5 @@
-import "./render-model.css";
-import modalHtml from "./render-model.html?raw";
+import "./render-modal.css";
+import modalHtml from "./render-modal.html?raw";
 
 let modal, form;
 //TODO: load user by ID
@@ -13,12 +13,13 @@ export const hideModal = () => {
 };
 
 /**
- * Renders the user model dialog.
+ * Renders the user modal dialog.
  *
  * @param {HTMLDivElement} element
+ * @param {(userLike) => Promise<void>} callback
  *   The element where the dialog will be appended.
  */
-export const renderModel = (element) => {
+export const renderModal = (element, callback) => {
   if (modal) return;
 
   modal = document.createElement("div");
@@ -32,7 +33,7 @@ export const renderModel = (element) => {
     hideModal();
   });
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = new FormData(form);
     const userLike = {};
@@ -48,6 +49,7 @@ export const renderModel = (element) => {
       userLike[key] = value;
     }
     //TODO: save user
+    await callback(userLike);
     hideModal();
   });
 
