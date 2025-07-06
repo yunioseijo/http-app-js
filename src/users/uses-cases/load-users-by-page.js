@@ -1,4 +1,4 @@
-import { localhostUserToModel } from "../mappers/localhost-user-mapper";
+import { localhostUserToModel } from "../mappers/user/localhostApiToFront.mapper";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 

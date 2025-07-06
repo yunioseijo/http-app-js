@@ -1,4 +1,4 @@
-import { User } from "../models/user";
+import { User } from "../../models/User";
 
 /**
  * Maps a user object from the localhost API to a User model.
