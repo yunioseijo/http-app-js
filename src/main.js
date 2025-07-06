@@ -4,7 +4,7 @@ import { UserApp } from "./users/users-app";
 
 document.querySelector("#app").innerHTML = `  <div>
     
-    <h1 id="app-title">Breaking bad App</h1>
+    <h1 id="app-title">CRUD VANILLA JS</h1>
     <div class="card">
     </div>
  
