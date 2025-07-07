@@ -58,6 +58,8 @@ export const renderModal = (element, callback) => {
     event.preventDefault();
     const formData = new FormData(form);
     const userLike = { ...loadedUser };
+    //By default formData does not send checkbox value if it is unchecked
+    userLike.isActive = form.isActive.checked;
     for (const [key, value] of formData) {
       if (key === "balance") {
         userLike[key] = Number(value);
