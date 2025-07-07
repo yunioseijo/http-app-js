@@ -1,15 +1,36 @@
 import "./render-modal.css";
 import modalHtml from "./render-modal.html?raw";
+import { User } from "../../models/User";
+import { getUserById } from "../../uses-cases/get-user-by-id";
 
 let modal, form;
+let loadedUser = {};
 //TODO: load user by ID
-export const showModal = () => {
+export const showModal = async (id) => {
   modal?.classList.remove("hide-modal");
+  if (!id) return;
+
+  const user = await getUserById(id);
+  setFormValues(user);
 };
 
 export const hideModal = () => {
   modal?.classList.add("hide-modal");
+
   form?.reset();
+};
+
+/**
+ * Sets the values of the form with the given user data.
+ *
+ * @param {User} user The user data to set the form values with.
+ */
+const setFormValues = (user) => {
+  form.firstName.value = user.firstName;
+  form.lastName.value = user.lastName;
+  form.balance.value = user.balance;
+  form.isActive.checked = user.isActive;
+  loadedUser = user;
 };
 
 /**
@@ -36,7 +57,7 @@ export const renderModal = (element, callback) => {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = new FormData(form);
-    const userLike = {};
+    const userLike = { ...loadedUser };
     for (const [key, value] of formData) {
       if (key === "balance") {
         userLike[key] = Number(value);

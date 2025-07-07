@@ -1,4 +1,5 @@
 import userStore from "../../store/user-store";
+import { showModal } from "../render-modal/render-modal";
 import "./render-table.css";
 
 let table;
@@ -20,6 +21,19 @@ const createTable = () => {
   return table;
 };
 /**
+ * Handles the click event on the table.
+ * If the clicked element is a link to edit the user, open the user modal with the user data.
+ * @param {MouseEvent} event
+ */
+const tableSelectListener = (event) => {
+  const element = event.target.closest(".select-user");
+  if (!element) return;
+  //const id = element.getAttribute("data-id");
+  const id = element.dataset.id;
+  showModal(id);
+};
+
+/**
  * @param {HTMLDivElement} element
  */
 export const renderTable = (element) => {
@@ -30,6 +44,7 @@ export const renderTable = (element) => {
     element.append(table);
   }
   //TODO: add listener
+  table.addEventListener("click", tableSelectListener);
 
   let tableHTML = ``;
   users.forEach((user) => {
@@ -41,11 +56,9 @@ export const renderTable = (element) => {
         <td>${user.lastName}</td>
         <td>${user.isActive}</td>
         <td>
-        <a href='#/' data-id="${user.id}">Select</a>
+        <a href='#/' class="select-user" data-id="${user.id}">Select</a>
         |
-        <a href='#/' data-id="${user.id}">Edit</a>
-        |
-        <a href='#/' data-id="${user.id}">Delete</a>
+        <a href='#/' class="delete-user" data-id="${user.id}">Delete</a>
         </td>
     </tr>
     `;
